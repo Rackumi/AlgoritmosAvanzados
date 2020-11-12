@@ -1,4 +1,4 @@
-public class Practica_2 {
+public class Practica_3a {
 
     public static int sedesH1 (int[] c0, int[] c1, int f){
         int actual;
@@ -25,7 +25,6 @@ public class Practica_2 {
         }
         return coste;
     }
-
 
     public static int sedesH2 (int[] c0, int[] c1, int f){
         int actual;
@@ -55,62 +54,53 @@ public class Practica_2 {
         return coste;
     }
 
-    public static int sedesH3 (int[] c0, int[] c1, int f){
-        int actual;
-        int coste;
-        if(c1[0] > c0[0]){
-            coste = c0[0];
-            actual = 0;
-        } else {
-            coste = c1[0];
-            actual = 1;
-        }
-        for (int i = 1; i < c0.length-1; i++) {
-            if(actual == 1){
-                if(c1[i] > c0[i] + f && !(c0[i+1] > c1[i+1] + f)){
-                    coste += c0[i] + f;
-                    actual = 0;
-                } else
-                    coste += c1[i];
-            } else {
-                if(c0[i] > c1[i] + f && !(c1[i+1] > c0[i+1] + f)){
-                    coste += c1[i] + f;
-                    actual = 1;
-                } else
-                    coste += c0[i];
-            }
-        }
+    private static int btMax;
 
-        if(actual == 1){
-            coste += Math.min(c1[c0.length - 1], c0[c0.length - 1] + f);
-        } else {
-            coste += Math.min(c0[c0.length - 1], c1[c0.length - 1] + f);
-        }
-        return coste;
+    public static int sedesBT_Wrapper (int[] c0, int[] c1, int f){
+        btMax = Integer.MAX_VALUE;
+        return sedesBT(c0, c1, f, 0, 0, -1);
     }
 
-    public static int sedesH1y2 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH1(c0, c1, f), sedesH2(c0, c1, f));
-    }
+    private static int sedesBT(int[] c0, int[] c1, int f, int i, int acc, int anterior){
+        if(i < c0.length){
+            int valorAux = -1;
 
-    public static int sedesH2y3 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH2(c0, c1, f), sedesH3(c0, c1, f));
-    }
-    public static int sedesH1y3 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH1(c0, c1, f), sedesH3(c0, c1, f));
-    }
+            int valorActual;
+            if(anterior == 1)
+                valorActual = acc + c0[i] + f;
+            else
+                valorActual = acc + c0[i];
 
-    public static int sedesH1y2y3 (int[] c0, int[] c1, int f){
-        int a = Math.min(sedesH1(c0, c1, f), sedesH2(c0, c1, f));
-        return Math.min(a, sedesH3(c0, c1, f));
+            if(valorActual < btMax)
+                valorAux = sedesBT(c0, c1, f, i+1, valorActual, 0);
+            if(valorAux != -1 && valorAux < btMax)
+                btMax = valorAux;
+
+            if(anterior == 0)
+                valorActual = acc + c1[i] + f;
+            else
+                valorActual = acc + c1[i];
+
+            if(valorActual < btMax)
+                valorAux = sedesBT(c0, c1, f, i+1, valorActual, 1);
+            if(valorAux != -1 && valorAux < btMax)
+                btMax = valorAux;
+            return btMax;
+        } else
+            return acc;
     }
 
     public static void main(String[] args) {
         int coste = sedesH1(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
         System.out.print("Coste total calculado por el algoritmo H1: ");
         System.out.println(coste);
+
         coste = sedesH2(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
         System.out.print("Coste total calculado por el algoritmo H2: ");
+        System.out.println(coste);
+
+        coste = sedesBT_Wrapper(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
+        System.out.print("Coste total calculado por el algoritmo BT: ");
         System.out.println(coste);
     }
 

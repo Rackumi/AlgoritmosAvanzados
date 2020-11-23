@@ -1,8 +1,5 @@
 public class Practica_3a {
 
-    private static int nodosBT = 0;
-    private static int nodosBTPoda = 0;
-
     public static int sedesH1 (int[] c0, int[] c1, int f){
         int actual;
         int coste;
@@ -67,7 +64,6 @@ public class Practica_3a {
 
     private static int sedesBT(int[] c0, int[] c1, int f, int i, int acc, int anterior){
         if(i < c0.length){
-            nodosBT++;
             int valorAux;
             int valorActual;
             if(anterior == 1)
@@ -89,45 +85,6 @@ public class Practica_3a {
                 btMax = valorAux;
             return btMax;
         } else
-            nodosBT++;
-            return acc;
-    }
-
-    private static int btMaxpoda;
-
-    public static int sedesBTPoda_Wrapper (int[] c0, int[] c1, int f){
-        btMaxpoda = Integer.MAX_VALUE;
-        return sedesBTPoda(c0, c1, f, 0, 0, -1);
-    }
-
-    private static int sedesBTPoda(int[] c0, int[] c1, int f, int i, int acc, int anterior){
-        if(i < c0.length){
-            nodosBTPoda++;
-            int valorAux = -1;
-
-            int valorActual;
-            if(anterior == 1)
-                valorActual = acc + c0[i] + f;
-            else
-                valorActual = acc + c0[i];
-
-            if(valorActual < btMaxpoda)
-                valorAux = sedesBTPoda(c0, c1, f, i+1, valorActual, 0);
-            if(valorAux != -1 && valorAux < btMaxpoda)
-                btMaxpoda = valorAux;
-
-            if(anterior == 0)
-                valorActual = acc + c1[i] + f;
-            else
-                valorActual = acc + c1[i];
-
-            if(valorActual < btMaxpoda)
-                valorAux = sedesBTPoda(c0, c1, f, i+1, valorActual, 1);
-            if(valorAux != -1 && valorAux < btMaxpoda)
-                btMaxpoda = valorAux;
-            return btMaxpoda;
-        } else
-            nodosBTPoda++;
             return acc;
     }
 
@@ -143,12 +100,6 @@ public class Practica_3a {
         coste = sedesBT_Wrapper(new int[]{20,23,27,2,41,23,22,16,44,2,29,5}, new int[]{14,34,1,29,3,14,45,4,43,4,12,15}, 5);
         System.out.print("Coste total calculado por el algoritmo BT: ");
         System.out.println(coste);
-        System.out.println("Numero de nodos: " + nodosBT);
-
-        coste = sedesBTPoda_Wrapper(new int[]{20,23,27,2,41,23,22,16,44,2,29,5}, new int[]{14,34,1,29,3,14,45,4,43,4,12,15}, 5);
-        System.out.print("Coste total calculado por el algoritmo BT con poda: ");
-        System.out.println(coste);
-        System.out.println("Numero de nodos: " + nodosBTPoda);
     }
 
 }

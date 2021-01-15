@@ -89,28 +89,15 @@ public class Practica_2 {
         return coste;
     }
 
-    public static int sedesH1y2 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH1(c0, c1, f), sedesH2(c0, c1, f));
-    }
-
-    public static int sedesH2y3 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH2(c0, c1, f), sedesH3(c0, c1, f));
-    }
-    public static int sedesH1y3 (int[] c0, int[] c1, int f){
-        return Math.min(sedesH1(c0, c1, f), sedesH3(c0, c1, f));
-    }
-
-    public static int sedesH1y2y3 (int[] c0, int[] c1, int f){
-        int a = Math.min(sedesH1(c0, c1, f), sedesH2(c0, c1, f));
-        return Math.min(a, sedesH3(c0, c1, f));
-    }
-
     public static void main(String[] args) {
         int coste = sedesH1(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
         System.out.print("Coste total calculado por el algoritmo H1: ");
         System.out.println(coste);
         coste = sedesH2(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
         System.out.print("Coste total calculado por el algoritmo H2: ");
+        System.out.println(coste);
+        coste = sedesH3(new int[]{1,3,20,30}, new int[]{50,20,2,4}, 10);
+        System.out.print("Coste total calculado por el algoritmo H3: ");
         System.out.println(coste);
     }
 

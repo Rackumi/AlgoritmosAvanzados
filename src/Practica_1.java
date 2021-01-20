@@ -65,16 +65,7 @@ public class Practica_1 {
      * @return el array ordenado
      */
     private static int[] ordenarIndices(int[] v1) {
-        int[] v2 = new int[v1.length];
-        v2[0] = 0;
-        for (int i=1; i<v1.length; i++) {
-            int aux = v1[i];
-            int j;
-            for (j=i-1; j>=0 && v1[v2[j]]>aux; j--)
-                v2[j+1] = v2[j];
-            v2[j+1] = i;
-        }
-        return v2;
+        return new int[] {0};
     }
 
 }
